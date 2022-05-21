@@ -145,11 +145,11 @@ public class AcademyController {
 			
 			
 			return academies;
-		}if(!(message.getName() != "")) {
+		}if(message.getName() != "") {
 			
 			academies = academyService.findAcademiesByTitle(message.getName());
 			return academies;
-		}if(!(message.getLocation() != "")) {
+		}if(message.getLocation() != "") {
 			
 			academies = academyService.findAcademiesByLocation(message.getLocation());
 			return academies;
@@ -222,15 +222,15 @@ public class AcademyController {
 	@DeleteMapping("/academies/{codeId}/remove/confirm")
 	public MessageConfirm removeAcademy(@PathVariable String codeId) {
 		
-		MessageConfirm mes=new MessageConfirm("academy removed with students");
+		MessageConfirm mes=new MessageConfirm("Academy removed with its students");
 		
 		List<Student> students = studentService.findStudentsByAcademy(academyService.findAcademybyId(codeId));
 		for(Student student: students)
 			studentService.removeStudent(student.getfCode());
 		if(!academyService.removeAcademy(codeId)) {
-		   mes.setMessage("unable to remove the selected student");
 		   return mes;
 		}else{
+			mes.setMessage("Unable to remove the selected Academy");
 			return mes;
 		}
 		
