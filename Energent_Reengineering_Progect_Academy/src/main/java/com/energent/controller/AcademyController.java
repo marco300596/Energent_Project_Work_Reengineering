@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,7 +37,6 @@ public class AcademyController {
 	 * e se in questo modo si può tenere traccia degli eventi che affronta
 	 * quest'ultimo.
 	 */
-	Logger logger = Logger.getLogger(this.getClass());
 	@Autowired
 	private AcademyService academyService;
 	
@@ -46,28 +44,25 @@ public class AcademyController {
 	private StudentService studentService;
 	
 	@ApiOperation(value="show all academies and students")
-	@GetMapping("/totalReport")
+	@GetMapping("/totalReports")
 	public HashMap<String,List> showReport() {
 
 		HashMap<String,List> reportAll=new HashMap();
 		List<Student> studentList = new ArrayList<>();
 		List<Academy> academiesList = academyService.findAllAcademies();
-		logger.info(academiesList.toString());
 		if(!academiesList.isEmpty()) {
 			
 			for(Academy academy : academiesList) {
 				studentList.addAll(studentService.findStudentsByAcademy(academy));
-				logger.info(reportAll.toString());
 			}		
 		}
 		reportAll.put("students", studentList);
 		reportAll.put("academy", academiesList);
-		logger.info(studentList.toString());
 		return reportAll;
 	}
 
 	@ApiOperation(value="show all academies and students of one year")
-	@GetMapping("/annualReport")
+	@GetMapping("/annualReports")
 	public HashMap<String,List> showAnnualReport() {
 		
 		HashMap<String,List> reportAll=new HashMap<>();
@@ -78,19 +73,17 @@ public class AcademyController {
 			
 			for(Academy academy : academiesList) {
 				studentList.addAll(studentService.findStudentsByAcademy(academy));
-				logger.info(studentList.toString());
 			}
 		}
 	 
 		reportAll.put("academy", academiesList);
 		reportAll.put("student", studentList);
-		logger.info(studentList.toString());
 		return reportAll;
 	
 	}
 
 	@ApiOperation(value="show a form page for an academy to insert")
-	@PostMapping("/academy")
+	@PostMapping("/academies")
 	public Academy addAcademy(@RequestBody Academy academy) {
 		
 		academy = new Academy();
@@ -98,7 +91,7 @@ public class AcademyController {
 	}
 
 	@ApiOperation(value="show all the details of an inserted academy")
-	@PostMapping("/AcademyConfirm")
+	@PostMapping("/AcademiesConfirm")
 	public HashMap<String,Academy> confirmAcademy(@RequestBody Academy academy) {
 		
 		HashMap<String,Academy> mapacademy=new HashMap<>();
@@ -107,7 +100,7 @@ public class AcademyController {
 	}
 	
 	@ApiOperation(value="show a message after inserting the academy")
-	@PostMapping("/confirm/{codeId}")
+	@PostMapping("academies/confirm/{codeId}")
 	public MessageConfirm resultAcademy(@PathVariable String codeId, @ModelAttribute("academy") Academy academy) {
 		
 		MessageConfirm message=new MessageConfirm("operation successful");
@@ -126,7 +119,7 @@ public class AcademyController {
 	}
 
 	@ApiOperation(value="display all the academies filtered by a parameter or all of them")
-	@PostMapping("/academies")
+	@GetMapping("/academies")
 	public List<Academy> showAcademies(@RequestBody Message message) {
 		/*
 		 * this method is in charge of check if everything is inserted correctly
@@ -200,7 +193,7 @@ public class AcademyController {
 	}
 
 	@ApiOperation(value="updating of the academy")
-	@PutMapping("/AcademyApproved")
+	@PutMapping("/AcademiesApproved")
 	public HashMap<String,Academy> updateAcademies(@RequestBody Academy academy) {
 		String message="academy updated";
 		HashMap<String,Academy>mapAcademy=new HashMap<>();
