@@ -41,8 +41,6 @@ public class StudentServiceImpl implements StudentService {
 	studentToUpdate.setAcademy(academy);
 	studentRepository.save(studentToUpdate);
 	
-  
-	
 }
 	
 	@Override
