@@ -12,5 +12,5 @@ public interface StudentRepository extends JpaRepository<Student, String> {
 	
 	//see existsByID in CrudRepository<-PagingAndSortingRepository<-JPAREPOSITORY
 	public List<Student> findByAcademy(Academy academy);
-	public List<Student> findByFirstnameAndLastname(String firstname, String lastname);
+	public List<Student> findByLastname(String lastname);
 }

@@ -9,6 +9,7 @@ public class Message {
 	private String name;
 	private Date sdate;
 	private Date edate;
+	private String student;
 
 	
 
@@ -17,13 +18,14 @@ public class Message {
 
 
 
-	public Message(String code, String location, String name, Date sdate, Date edate) {
+	public Message(String code, String location, String name, Date sdate, Date edate, String student) {
 		
 		this.code = code;
 		this.location = location;
 		this.name = name;
 		this.sdate = sdate;
 		this.edate = edate;
+		this.student = student;
 	}
 
 
@@ -84,6 +86,18 @@ public class Message {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+
+
+	public String getStudent() {
+		return student;
+	}
+
+
+
+	public void setStudent(String student) {
+		this.student = student;
 	}
 	
 	

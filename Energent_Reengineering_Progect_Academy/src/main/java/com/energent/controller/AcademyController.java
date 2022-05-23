@@ -134,7 +134,8 @@ public class AcademyController {
 		 * system's response.
 		 */
 		List<Academy> academies = new ArrayList<>();
-		 
+		List<Student> students = new ArrayList<>();
+		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
 		if(message.getCode() != "") {
@@ -155,23 +156,32 @@ public class AcademyController {
 			return academies;
 		}
 		if((message.getEdate()!=null) && (message.getSdate()!=null)) {
-		if((!(message.getEdate().toLocalDate().format(formatter).equals("01/01/2000"))&&(!(message.getSdate().toLocalDate().format(formatter).equals("01/01/2000"))))){
+			if((!(message.getEdate().toLocalDate().format(formatter).equals("01/01/2000"))&&(!(message.getSdate().toLocalDate().format(formatter).equals("01/01/2000"))))){
 				
 				academies = academyService.findAcademiesByStartAndEndDate(message.getSdate().toLocalDate().format(formatter), message.getEdate().toLocalDate().format(formatter));
 				return academies;
-		}
+			}
 		}if(message.getEdate()!=null) {
-		if(!(message.getEdate().toLocalDate().format(formatter).equals("01/01/2000"))){
+			if(!(message.getEdate().toLocalDate().format(formatter).equals("01/01/2000"))){
 				
 				academies = academyService.findAcademiesByEndDate(message.getEdate().toLocalDate().format(formatter));
 				return academies;
-		}
+			}
 		}if(message.getSdate()!=null) {
-		if(!(message.getSdate().toLocalDate().format(formatter).equals("01/01/2000"))){
+			if(!(message.getSdate().toLocalDate().format(formatter).equals("01/01/2000"))){
 				
 				academies = academyService.findAcademiesByStartDate(message.getSdate().toLocalDate().format(formatter));
 				return academies;
-		}
+			}
+		}if(message.getStudent() != "" && message.getStudent()!=null) {
+
+			students = studentService.findStudentsByLastname(message.getStudent());
+			for(Student student: students) {
+
+				academies.add(academyService.findAcademybyId(student.getAcademy().getCodeId()));
+			}
+			if(!academies.isEmpty())
+				return academies;
 		}else {
 		
 			academies = academyService.findAcademiesForTable();

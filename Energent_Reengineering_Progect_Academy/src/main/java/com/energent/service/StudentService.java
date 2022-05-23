@@ -15,5 +15,5 @@ public interface StudentService {
 	public boolean removeStudent(String fCode);
 	public Student findStudentById(String fCode);
 	public List<Student> findStudentsByAcademy(Academy academy);
-	public List<Student> findStudentsByFirstnameAndLastname(String firstname, String lastname);
+	public List<Student> findStudentsByLastname(String lastname);
 }
